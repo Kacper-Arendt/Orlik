@@ -1,34 +1,43 @@
 import React from "react";
 import styled from "styled-components";
+import {device} from "../../model/Media";
 
 const StyledBurger = styled.button<MenuIProps>`
   grid-area: burger;
   justify-self: end;
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  
-  padding-right: 5%;
-  height: 3.5rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  position: relative;
 
-  &:focus {
-    outline: none;
+  border: none;
+  margin-right: 10%;
+  transition: all .3s ease-in-out;
+  transform: ${(props: MenuIProps) => props.isOpen && 'rotate(45deg)'};
+  z-index: 11;
+  background: transparent;
+
+  :before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+
+    width: 50px;
+    height: 50px;
+    border: 3px solid transparent;
+    transition: all .3s ease-in-out;
+    border-radius: 100%;
+    border-color: ${(props: MenuIProps) => props.isOpen && '#ecf0f1'};
   }
 
   div {
-    width: 3.5rem;
-    height: .35rem;
-    border-radius: 10px;
-    transition: all .35s linear;
-    transform-origin: 1px;
+    height: 4px;
+    margin: 6px auto;
+    transition: all .3s ease-in-out;
     background-color: black;
 
+    width: ${(props: MenuIProps) => props.isOpen ? '30px' : '30px'};
+
     :first-child {
-      transform: ${(props: MenuIProps) => props.isOpen ? 'rotate(45deg) ' : 'rotate(0)'};
+      transform: ${(props: MenuIProps) => props.isOpen && 'translateY(10px)'};
     }
 
     :nth-child(2) {
@@ -36,9 +45,13 @@ const StyledBurger = styled.button<MenuIProps>`
     }
 
     :nth-child(3) {
-      transform: ${(props: MenuIProps) => props.isOpen ? 'rotate(-45deg) ' : 'rotate(0)'};
+      transform: ${(props: MenuIProps) => props.isOpen && 'translateY(-10px) rotate(90deg)'};
     }
   }
+}
+
+@media${device.tablet}{
+  display: none;
 }
 `;
 

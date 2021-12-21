@@ -2,53 +2,79 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {Burger} from "./Burger";
 import {Link} from "react-router-dom";
+import {device} from "../../model/Media";
 
 const StyledNav = styled.header`
-  position: sticky;
+  position: fixed;
   left: 0;
   right: 0;
+  width: 100vw;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: min-content min-content;
+  grid-template-rows: min-content;
   grid-template-areas: 
-      'logo burger'
-      'menu menu';
-  padding-top: 1rem;
+      'logo burger';
+  padding-top: 1.5rem;
 
   h1 {
     grid-area: logo;
-    padding-left: 5%;
+    padding-left: 10%;
     font-size: 2.5em;
   }
+
+@media${device.tablet} {
+  grid-template-columns: repeat(2, min-content);
+  justify-content: space-between;
+
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 130rem;
+}
 `;
 const Menu = styled.nav<{ isOpen: boolean }>`
-  grid-area: menu;
   position: fixed;
-  top: 5rem;
+  top: 0;
+  bottom: 0;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  row-gap: 1rem;
+  justify-content: start;
+  row-gap: 2rem;
 
+  width: 75%;
+  transform: ${props => props.isOpen ? 'translateX(35%)' : 'translateX(165%)'};
+  padding: 6.5rem 0 3rem;
+  transition: transform 0.3s ease-in-out;
+  z-index: 10;
+  background: rgba(0, 0, 0, .3);
+  
+@media${device.tablet} {
+  grid-area: burger;
+  position: static;
+
+  flex-direction: row;
+  justify-content: end;
+  column-gap: 2rem;
   width: 100%;
-  height: ${props => props.isOpen ? '10rem' : 0};
-  border-bottom: 1px solid black;
-  opacity: ${props => props.isOpen ? 1 : 0};
-  visibility: ${props => props.isOpen ? 'visible' : 'hidden'};
-  transition: opacity .75s, visibility .75s, height .35s;
-
-  background-color: #fff;
+  padding: 1rem 5% 1rem 4rem;
+  transform: translateX(0);
+  background: none;
+}
 `;
 
-const StyledLink = styled(Link)<{isOpen: boolean}>`
-  display: ${props => props.isOpen ? 'block' : 'none'};
+const StyledLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: #333;
   white-space: nowrap;
-  font-size: 1.5em;
+  font-size: 2.3rem;
+  font-weight: 500;
+
+@media${device.tablet} {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
 `;
 
 export const Nav = () => {
@@ -63,9 +89,9 @@ export const Nav = () => {
             <h1>Orlik</h1>
             <Burger isOpen={isOpen} setIsOpen={toggleMenuHandler}/>
             <Menu isOpen={isOpen}>
-                <StyledLink isOpen={isOpen} to='/'>Sign In</StyledLink>
-                <StyledLink isOpen={isOpen} to='/'>Sign Up</StyledLink>
-                <StyledLink isOpen={isOpen} to='/'>Facilities</StyledLink>
+                <StyledLink to='/'>Sign In</StyledLink>
+                <StyledLink to='/'>Sign Up</StyledLink>
+                <StyledLink to='/'>Facilities</StyledLink>
             </Menu>
         </StyledNav>
     )
