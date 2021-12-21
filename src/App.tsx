@@ -1,7 +1,8 @@
 import React from 'react';
 import {createGlobalStyle} from "styled-components";
-import {BrowserRouter, Routes} from "react-router-dom";
-import {Nav} from "./components/nav/Nav";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Urls, Nav} from "./components/Components";
+import {Register} from "./components/auth/Register";
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -11,12 +12,14 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+
   html {
     box-sizing: border-box;
     font-size: 62.5%;
     width: 100%;
     height: 100%;
   }
+
   body {
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
@@ -27,10 +30,11 @@ const GlobalStyle = createGlobalStyle`
 function App() {
     return (
         <>
-            <GlobalStyle />
+            <GlobalStyle/>
             <BrowserRouter>
-                <Nav />
+                <Nav/>
                 <Routes>
+                    <Route path={Urls.register} element={<Register/>}/>
                 </Routes>
             </BrowserRouter>
         </>
