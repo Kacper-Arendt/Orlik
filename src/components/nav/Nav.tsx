@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {Burger} from "./Burger";
 import {Link} from "react-router-dom";
 import {device} from "../../model/Media";
+import {Urls} from "../../model/Urls";
 
 const StyledNav = styled.header`
   position: fixed;
@@ -49,7 +50,7 @@ const Menu = styled.nav<{ isOpen: boolean }>`
   transition: transform 0.3s ease-in-out;
   z-index: 10;
   background: rgba(0, 0, 0, .3);
-  
+
 @media${device.tablet} {
   grid-area: burger;
   position: static;
@@ -89,8 +90,8 @@ export const Nav = () => {
             <h1>Orlik</h1>
             <Burger isOpen={isOpen} setIsOpen={toggleMenuHandler}/>
             <Menu isOpen={isOpen}>
-                <StyledLink to='/'>Sign In</StyledLink>
-                <StyledLink to='/'>Sign Up</StyledLink>
+                <StyledLink to={Urls.login}>Sign In</StyledLink>
+                <StyledLink to={Urls.register}>Sign Up</StyledLink>
                 <StyledLink to='/'>Facilities</StyledLink>
             </Menu>
         </StyledNav>

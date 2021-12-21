@@ -1,5 +1,5 @@
 import React from 'react';
-import {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Urls, Nav} from "./components/Components";
 import {Register} from "./components/auth/Register";
@@ -27,9 +27,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+`;
+
 function App() {
     return (
-        <>
+        <Wrapper>
             <GlobalStyle/>
             <BrowserRouter>
                 <Nav/>
@@ -37,7 +43,7 @@ function App() {
                     <Route path={Urls.register} element={<Register/>}/>
                 </Routes>
             </BrowserRouter>
-        </>
+        </Wrapper>
     );
 }
 
