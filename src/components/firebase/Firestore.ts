@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {doc, getDoc, setDoc} from "firebase/firestore";
 import {firestore} from './config';
 import {FirebasePath} from "../../model/Firebase";
 import {IUser} from "../../model/User";
@@ -16,15 +16,19 @@ export const getUserDocument = async (id: string) => {
     }
 };
 
-export const generateUserDocument = async (id: string,user: {email: string, name: string}): Promise<any> => {
-    const { name, email } = user;
-    const docRef = doc(firestore, FirebasePath.users, id);
-    const snapshot = await getDoc(docRef);
+export const generateUserDocument = async (
+    id: string,
+    email: string,
+    createdAt: string,
+    name: string,
+    age: number,
+    gender: string): Promise<any> => {
     try {
+        const docRef = doc(firestore, FirebasePath.users, id);
+        const snapshot = await getDoc(docRef);
         if (!snapshot.exists()) {
-            return await setDoc(docRef, { id, name, email });
+            return await setDoc(docRef, {id, email, createdAt, name, age, gender});
         } else {
-            console.log(`User document already exists`);
         }
     } catch (error) {
         console.log(error);

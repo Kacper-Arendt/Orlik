@@ -1,10 +1,11 @@
 export interface INewUser {
     email: string,
-    name: string,
-    age: number,
+    id: string,
+    createdAt: string,
 }
 
 export interface IUser extends INewUser{
-    id: string,
+    name: string,
+    age: number,
     photo?: string,
 }
