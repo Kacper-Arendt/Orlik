@@ -10,8 +10,8 @@ const Spinner = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .3);
-  z-index: 100;
+  background-color: rgba(0, 0, 0, .4);
+  z-index: 300;
 
   div {
     display: inline-block;
@@ -25,8 +25,8 @@ const Spinner = styled.div`
       height: 64px;
       margin: 8px;
       border-radius: 50%;
-      border: 6px solid var(--color-primary);
-      border-color: var(--color-primary) transparent;
+      border: 6px solid #F28705;
+      border-color: #F28705 transparent;
       animation: lds-dual-ring .7s linear infinite;
     }
   }

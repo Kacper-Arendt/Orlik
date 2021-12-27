@@ -1,6 +1,18 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {Form, generateUserDocument, registerUserWithEmailAndPassword, Urls, WithLoading} from "../Components";
+import {ChooseGender} from "./ChooseGender";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 5rem;
+
+  width: 100%;
+  height: 100%;
+`;
 
 const initVal = {
     email: '',
@@ -28,10 +40,11 @@ export const Register = () => {
                     data.name,
                     data.age,
                     data.gender
-                )
+                );
+                setData(initVal);
             }
         } catch (e) {
-            setError('Coś poszło nie tak')
+            setError('Coś poszło nie tak');
         } finally {
             setLoading(false);
         }
@@ -94,26 +107,9 @@ export const Register = () => {
                             required
                         />
                     </label>
-                    <label>
-                        Gender
-                        <select name='gender' onChange={onChangeHandler}>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                    </label>
+                    <ChooseGender setGender={(val)=> setData({...data, gender: val})} gender={data.gender} />
                 </Form>
             </Wrapper>
         </WithLoading>
     )
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  row-gap: 5rem;
-
-  width: 100%;
-  height: 100%;
-`;

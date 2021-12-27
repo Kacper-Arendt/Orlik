@@ -2,27 +2,6 @@ import React, {ReactNode} from "react";
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 
-interface IProps {
-    header: string,
-    redirectText: string,
-    redirectUrl: string,
-    children: ReactNode,
-    onSubmit: (e: React.SyntheticEvent) => void
-}
-
-
-export const Form = (props: IProps) => {
-    const navigate = useNavigate();
-    return (
-        <StyledForm onSubmit={props.onSubmit}>
-            <h2>{props.header}</h2>
-            {props.children}
-            <button type='submit'>Submit</button>
-            <p>{props.redirectText}</p> <span onClick={() => navigate(props.redirectUrl)}>Click!</span>
-        </StyledForm>
-    )
-}
-
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -41,10 +20,11 @@ const StyledForm = styled.form`
   }
 
   input {
+    width: 20rem;
     outline: none;
     border: 1px solid black;
     border-radius: 3px;
-    padding: .5rem;
+    padding: .75rem;
   }
 
   p {
@@ -68,3 +48,24 @@ const StyledForm = styled.form`
     background-color: transparent;
   }
 `;
+
+interface IProps {
+    header: string,
+    redirectText: string,
+    redirectUrl: string,
+    children: ReactNode,
+    onSubmit: (e: React.SyntheticEvent) => void
+}
+
+
+export const Form = (props: IProps) => {
+    const navigate = useNavigate();
+    return (
+        <StyledForm onSubmit={props.onSubmit}>
+            <h2>{props.header}</h2>
+            {props.children}
+            <button type='submit'>Submit</button>
+            <p>{props.redirectText}</p> <span onClick={() => navigate(props.redirectUrl)}>Click!</span>
+        </StyledForm>
+    )
+}
