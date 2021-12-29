@@ -1,27 +1,52 @@
-import React from "react";
-import styled from "styled-components";
+import React, {useState} from "react";
 import {Form} from "../reusable/Form";
+import {IProps} from "./Auth";
+import {useField} from "../hoc/hooks/useField";
 
-export const Login = () => {
+const initVal = {
+    email: '',
+    password: '',
+}
+
+export const Login = (props: IProps) => {
+    const {fields, handleChange} = useField(initVal);
+
+    const onSubmitHandler = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        try {
+            props.setLoading(true);
+            console.log(fields)
+        }catch (e){
+            props.setError('Coś poszło nie tak')
+        }finally {
+            props.setLoading(false);
+        }
+    }
+
     return (
-        <Wrapper>
-            {/*<Form>*/}
-            {/*    <label>*/}
-            {/*        E-mail*/}
-            {/*        <input type="text"/>*/}
-            {/*    </label>*/}
-            {/*</Form>*/}
-        </Wrapper>
+        <>
+            <Form
+                header='Sign In'
+                onSubmit={onSubmitHandler}
+            >
+                <label>
+                    E-mail
+                    <input
+                        type="email"
+                        name='email'
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Password
+                    <input
+                        type="password"
+                        name='password'
+                        onChange={handleChange}
+                    />
+                </label>
+            </Form>
+        </>
     )
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  row-gap: 5rem;
-
-  width: 100%;
-  height: 100%;
-`;

@@ -90,8 +90,7 @@ export const Nav = () => {
             <h1>Orlik</h1>
             <Burger isOpen={isOpen} setIsOpen={toggleMenuHandler}/>
             <Menu isOpen={isOpen}>
-                <StyledLink to={Urls.login}>Sign In</StyledLink>
-                <StyledLink to={Urls.register}>Sign Up</StyledLink>
+                <StyledLink to={Urls.auth}>Authentication</StyledLink>
                 <StyledLink to='/'>Facilities</StyledLink>
             </Menu>
         </StyledNav>

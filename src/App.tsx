@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, {createGlobalStyle} from "styled-components";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Urls, Nav} from "./components/Components";
-import {Register} from "./components/auth/Register";
+import {Urls, Nav, device} from "./components/Components";
+import {Auth} from "./components/auth/Auth";
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -18,6 +18,14 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
     width: 100%;
     height: 100%;
+    
+  @media${device.laptop} {
+    font-size: 71.25%;
+  } @media${device.laptopL} {
+    font-size: 81.25%;
+  } @media${device.desktop} {
+    font-size: 91.25%;
+  }
   }
 
   body {
@@ -40,7 +48,7 @@ function App() {
             <BrowserRouter>
                 <Nav/>
                 <Routes>
-                    <Route path={Urls.register} element={<Register/>}/>
+                    <Route path={Urls.auth} element={<Auth/>}/>
                 </Routes>
             </BrowserRouter>
         </Wrapper>

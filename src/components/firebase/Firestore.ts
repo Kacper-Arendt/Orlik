@@ -21,13 +21,12 @@ export const generateUserDocument = async (
     email: string,
     createdAt: string,
     name: string,
-    age: number,
     gender: string): Promise<any> => {
     try {
         const docRef = doc(firestore, FirebasePath.users, id);
         const snapshot = await getDoc(docRef);
         if (!snapshot.exists()) {
-            return await setDoc(docRef, {id, email, createdAt, name, age, gender});
+            return await setDoc(docRef, {id, email, createdAt, name, gender});
         } else {
         }
     } catch (error) {

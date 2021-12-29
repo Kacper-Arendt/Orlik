@@ -13,13 +13,13 @@ const Gender = styled.div<{ active: boolean }>`
   align-items: center;
   justify-content: center;
 
-  padding: 1rem;
-  border: 1px solid ${props => props.active ? 'green' : 'grey'};
+  padding: .75rem;
+  border: 1px solid ${props => props.active ? 'orange' : 'grey'};
   border-radius: 5px;
 
   svg {
-    font-size: 3rem;
-    color: ${props => props.active ? 'green' : 'grey'};
+    font-size: 2.5rem;
+    color: ${props => props.active ? 'orange' : 'grey'};
   }
 `;
 
