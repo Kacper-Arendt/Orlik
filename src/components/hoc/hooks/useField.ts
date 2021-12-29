@@ -10,11 +10,14 @@ export const useField = <T>(initialState: T) => {
         });
     }
 
-
+    const reset = () => {
+        setFields(initialState);
+    }
 
     return {
         fields,
         setFields,
+        reset,
         handleChange
     };
 }

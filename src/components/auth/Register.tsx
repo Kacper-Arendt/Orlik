@@ -1,8 +1,6 @@
 import React, {useState} from "react";
-import { Form, generateUserDocument, registerUserWithEmailAndPassword} from "../Components";
+import { Form, generateUserDocument, registerUserWithEmailAndPassword, useField, ChooseGender} from "../Components";
 import { IProps } from "./Auth";
-import {ChooseGender} from "./ChooseGender";
-import {useField} from "../hoc/hooks/useField";
 
 const initVal = {
     email: '',
@@ -11,7 +9,7 @@ const initVal = {
 }
 
 export const Register = (props: IProps) => {
-    const {fields, setFields, handleChange} = useField(initVal);
+    const {fields, reset, handleChange} = useField(initVal);
     const [gender, setGender] = useState('male');
 
     const onSubmitHandler = async (e: React.SyntheticEvent) => {
@@ -27,7 +25,7 @@ export const Register = (props: IProps) => {
                     fields.name,
                     gender
                 );
-                setFields(initVal);
+                reset();
             }
         } catch (e) {
             props.setError('Coś poszło nie tak');

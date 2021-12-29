@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {Form} from "../reusable/Form";
+import React from "react";
+import {useNavigate} from "react-router-dom";
+import {Form, useField, loginWithEmailAndPassword, getUserDocument, Urls} from "../Components";
 import {IProps} from "./Auth";
-import {useField} from "../hoc/hooks/useField";
 
 const initVal = {
     email: '',
@@ -9,16 +9,23 @@ const initVal = {
 }
 
 export const Login = (props: IProps) => {
-    const {fields, handleChange} = useField(initVal);
+    const {fields, handleChange, reset} = useField(initVal);
+    const navigate = useNavigate();
 
-    const onSubmitHandler = (e: React.SyntheticEvent) => {
+    const onSubmitHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
             props.setLoading(true);
-            console.log(fields)
-        }catch (e){
-            props.setError('Coś poszło nie tak')
-        }finally {
+            const login = await loginWithEmailAndPassword(fields);
+
+            if (login._tokenResponse.localId) {
+                await getUserDocument(login._tokenResponse.localId);
+                reset();
+                navigate(Urls.home);
+            }
+        } catch (e) {
+            props.setError('Coś poszło nie tak');
+        } finally {
             props.setLoading(false);
         }
     }
