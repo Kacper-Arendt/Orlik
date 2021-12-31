@@ -18,6 +18,7 @@ const Box = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  
   height: 40rem;
   transition: 2s all;
   
