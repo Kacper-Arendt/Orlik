@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, {createGlobalStyle} from "styled-components";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import {Urls, Nav, device} from "./components/Components";
 import {Auth} from "./components/auth/Auth";
 
@@ -49,12 +49,12 @@ function App() {
     return (
         <Wrapper>
             <GlobalStyle/>
-            <BrowserRouter>
+            <HashRouter>
                 <Nav/>
                 <Routes>
                     <Route path={Urls.auth} element={<Auth/>}/>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </Wrapper>
     );
 }
