@@ -6,5 +6,9 @@ export interface INewUser {
 
 export interface IUser extends INewUser{
     name: string,
+    gender: string,
+    age?: number
     photo?: string,
+    city?: string,
+    postalCode?: string
 }

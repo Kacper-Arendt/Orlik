@@ -9,14 +9,18 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action: PayloadAction<IUser>) => {
-            const {id, email, name, photo, createdAt} = action.payload
+            const {id, email, name, photo, createdAt, gender, age, city, postalCode} = action.payload
             return {
                 ...state,
                 id: id,
                 email: email,
                 name: name,
                 photo: photo,
-                createdAt: createdAt
+                createdAt: createdAt,
+                gender: gender,
+                age: age,
+                city: city,
+                postalCode: postalCode,
             }
         },
         logout() {

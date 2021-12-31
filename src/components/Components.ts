@@ -4,6 +4,7 @@ export * from './firebase/Firebase'
 
 export * from './reusable/Form';
 export * from './reusable/Loader';
+export * from './reusable/Popup';
 
 export * from './hoc/WithLoading';
 export * from './hoc/hooks/useField';

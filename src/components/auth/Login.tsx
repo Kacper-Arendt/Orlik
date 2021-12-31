@@ -5,7 +5,8 @@ import {
     loginWithEmailAndPassword,
     getUserDocument,
     useAppDispatch,
-    login, Urls,
+    login,
+    Urls,
 } from "../Components";
 import {IProps} from "./Auth";
 import {useNavigate} from "react-router-dom";

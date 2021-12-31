@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {FaRegSun, FaUserAlt} from "react-icons/fa";
 import {
@@ -9,8 +9,9 @@ import {
     useAppSelector,
     IUser,
     logout,
-    device
-} from "../Components";
+    device,
+} from "../../Components";
+import {Edit} from "./Edit";
 
 const Wrapper = styled.div`
   align-self: center;
@@ -103,6 +104,7 @@ export const UserProfile = () => {
     const dispatch = useAppDispatch();
     const {user} = useAppSelector(state => state);
     const {setSearch, state} = useFirebase<IUser>({path: FirebasePath.users, id: user.id});
+    const [edit, setEdit] = useState(false);
 
     useEffect(() => {
         setSearch(true);
@@ -116,9 +118,10 @@ export const UserProfile = () => {
 
     return (
         <WithLoading isLoading={state.loading} error={state.message}>
+            {edit && <Edit data={user || state.response} handleOpen={()=>setEdit(!edit)} />}
             <Wrapper>
                 <Profile>
-                    <EditIcon/>
+                    <EditIcon onClick={() => setEdit(true)}/>
                     <Image>
                         {state.response?.photo ?
                             <img src="" alt="User"/>
