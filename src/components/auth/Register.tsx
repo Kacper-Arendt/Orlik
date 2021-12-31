@@ -34,7 +34,7 @@ export const Register = (props: IProps) => {
                 reset();
             }
         } catch (e) {
-            props.setError('Coś poszło nie tak');
+            props.setError('Something went wrong, Try Again');
         } finally {
             props.setLoading(false);
         }

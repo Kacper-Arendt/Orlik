@@ -4,6 +4,7 @@ import {Burger} from "./Burger";
 import {Link} from "react-router-dom";
 import {device} from "../../model/Media";
 import {Urls} from "../../model/Urls";
+import {useAppSelector} from "../../redux/Hooks";
 
 const StyledNav = styled.header`
   position: fixed;
@@ -82,6 +83,7 @@ const StyledLink = styled(Link)`
 `;
 
 export const Nav = () => {
+    const {user} = useAppSelector(state => state);
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenuHandler = () => {
@@ -93,8 +95,11 @@ export const Nav = () => {
             <h1>Orlik</h1>
             <Burger isOpen={isOpen} setIsOpen={toggleMenuHandler}/>
             <Menu isOpen={isOpen} onClick={toggleMenuHandler}>
-                <StyledLink to={Urls.auth}>Auth</StyledLink>
-                <StyledLink to='/'>Facilities</StyledLink>
+                {user.id ?
+                    <StyledLink to={`${Urls.auth}/${Urls.profile}`}>Profile</StyledLink>
+                    :
+                    <StyledLink to={Urls.auth}>Auth</StyledLink>
+                }
             </Menu>
         </StyledNav>
     )

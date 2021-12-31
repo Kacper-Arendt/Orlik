@@ -16,6 +16,18 @@ export const getUserDocument = async (id: string) => {
     }
 };
 
+export const getFirebaseDoc = async (path: FirebasePath, id: string) => {
+    try {
+        const docRef = doc(firestore, path, id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data();
+        }
+    } catch (error) {
+        console.log('Error fetching data', error);
+    }
+}
+
 export const generateUserDocument = async (
     id: string,
     email: string,

@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {WithLoading} from "../hoc/WithLoading";
-import {Register} from "./Register";
-import {Login} from "./Login";
+import {WithLoading, useAuth, Register, Login} from "../Components";
 import {device} from "../../model/Media";
 
 const Wrapper = styled.div`
@@ -18,11 +16,11 @@ const Box = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  
+
   height: 40rem;
   transition: 2s all;
-  
-  @media${device.tablet}{
+
+@media${device.tablet} {
   height: 60rem;
 }
 `;
@@ -52,7 +50,7 @@ const Card = styled.div<{ active: boolean }>`
   height: 85%;
 
   display: flex;
-  align-items: ${props => props.active ? 'end' :'start'};
+  align-items: ${props => props.active ? 'end' : 'start'};
   justify-content: center;
   padding: 1rem;
   transform: ${props => props.active ? 'translate(-5rem, 25%)' : 'translate(-5rem, -25%)'};
@@ -64,10 +62,10 @@ const Card = styled.div<{ active: boolean }>`
   background-color: #BDD684;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
 
-  @media${device.tablet}{
+@media${device.tablet} {
   align-items: center;
   transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
-  }
+}
 
   @media (hover: hover) and (pointer: fine) {
     :hover {
@@ -89,6 +87,9 @@ export const Auth = () => {
     const [login, setLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const logged = useAuth();
+
+    if (logged) return null;
 
     return (
         <WithLoading isLoading={loading} error={error}>
