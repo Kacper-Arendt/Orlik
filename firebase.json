@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "orlik-games",
     "public": "build",
     "ignore": [
       "firebase.json",
