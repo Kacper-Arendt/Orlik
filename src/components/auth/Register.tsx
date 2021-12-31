@@ -1,5 +1,11 @@
 import React, {useState} from "react";
-import { Form, generateUserDocument, registerUserWithEmailAndPassword, useField, ChooseGender} from "../Components";
+import {
+    Form,
+    generateUserDocument,
+    registerUserWithEmailAndPassword,
+    useField,
+    ChooseGender,
+} from "../Components";
 import { IProps } from "./Auth";
 
 const initVal = {

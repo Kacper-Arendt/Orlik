@@ -1,7 +1,14 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
-import {Form, useField, loginWithEmailAndPassword, getUserDocument, Urls} from "../Components";
+import {
+    Form,
+    useField,
+    loginWithEmailAndPassword,
+    getUserDocument,
+    useAppDispatch,
+    login, Urls
+} from "../Components";
 import {IProps} from "./Auth";
+import {useNavigate} from "react-router-dom";
 
 const initVal = {
     email: '',
@@ -9,6 +16,7 @@ const initVal = {
 }
 
 export const Login = (props: IProps) => {
+    const dispatch = useAppDispatch();
     const {fields, handleChange, reset} = useField(initVal);
     const navigate = useNavigate();
 
@@ -16,19 +24,20 @@ export const Login = (props: IProps) => {
         e.preventDefault();
         try {
             props.setLoading(true);
-            const login = await loginWithEmailAndPassword(fields);
+            const request = await loginWithEmailAndPassword(fields.email, fields.password);
 
-            if (login._tokenResponse.localId) {
-                await getUserDocument(login._tokenResponse.localId);
+            if (request._tokenResponse.localId) {
+                const userDoc = await getUserDocument(request._tokenResponse.localId);
+                userDoc && dispatch(login(userDoc));
                 reset();
+                props.setLoading(false);
                 navigate(Urls.home);
             }
         } catch (e) {
             props.setError('Coś poszło nie tak');
-        } finally {
             props.setLoading(false);
         }
-    }
+    };
 
     return (
         <>
@@ -41,6 +50,7 @@ export const Login = (props: IProps) => {
                     <input
                         type="email"
                         name='email'
+                        value={fields.email}
                         onChange={handleChange}
                     />
                 </label>
@@ -49,6 +59,7 @@ export const Login = (props: IProps) => {
                     <input
                         type="password"
                         name='password'
+                        value={fields.password}
                         onChange={handleChange}
                     />
                 </label>

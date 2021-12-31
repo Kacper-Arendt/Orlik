@@ -7,16 +7,11 @@ import {
     User,
 } from 'firebase/auth';
 
-interface userCredentials {
-    email: string,
-    password: string
-}
-
 export function firebaseSignOut(): Promise<void> {
     return signOut(firebaseAuth);
 }
 
-export function loginWithEmailAndPassword({email, password}: userCredentials): Promise<any> {
+export function loginWithEmailAndPassword(email:string, password: string): Promise<any> {
     return signInWithEmailAndPassword(firebaseAuth, email, password);
 }
 

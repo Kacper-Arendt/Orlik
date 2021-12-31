@@ -1,5 +1,6 @@
 import React, {ReactNode} from "react";
 import styled from "styled-components";
+import {device} from "../../model/Media";
 
 const imgUrl = 'https://ik.imagekit.io/kacper/Orlik/Vecteezy-UEFA-Character-R031821_Wp0M6I-md.jpg?updatedAt=1640806620837'
 
@@ -10,47 +11,36 @@ const StyledForm = styled.form`
   align-items: center;
   row-gap: 1rem;
   height: 100%;
+  font-size: 1.6rem;
 
   h2 {
-    font-size: 2.5rem;
+    font-size: 1.2em;
   }
 
   label {
     display: flex;
     flex-direction: column;
     row-gap: .5rem;
-    font-size: 1.4rem;
+    font-size: .7em;
   }
 
   input {
-    width: 20rem;
+    width: 18rem;
     outline: none;
     border: 1px solid black;
     border-radius: 3px;
-    padding: .75rem;
-  }
-
-  p {
-    margin-top: 2rem;
-    white-space: nowrap;
-    font-size: 1.6rem;
-    color: rgba(0, 0, 0, .5);
-  }
-
-  span {
-    font-weight: 500;
-    color: rgba(0, 0, 0, .75);
+    padding: .5rem;
   }
 
   button {
-    padding: 1rem 3rem;
+    padding: .7rem 2rem;
     border: 1px solid #13aa52;
     border-radius: 5px;
 
     margin-top: auto;
     box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
     outline: none;
-    font-size: 1.6rem;
+    font-size: .9em;
     color: #fff;
     background-color: #13aa52;
     cursor: pointer;
@@ -61,9 +51,25 @@ const StyledForm = styled.form`
   }
 
   img {
-    margin-bottom: auto;
-    height: 15rem;
+    height: 7rem;
   }
+
+@media${device.tablet} {
+  font-size: 2.2rem;
+  
+  input{
+    width: 20rem;
+    padding: .75rem;
+  }
+  
+  button{
+    padding: 1rem 3rem;
+  }
+  
+  img{
+    height: 20rem;
+  }
+}
 `;
 
 interface IProps {

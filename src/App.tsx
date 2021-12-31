@@ -33,6 +33,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     letter-spacing: 1.5px;
   }
+  
+  :root{
+    --max-width: 100rem;
+  }
 `;
 
 const Wrapper = styled.div`

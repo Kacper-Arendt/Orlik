@@ -10,6 +10,7 @@ const StyledNav = styled.header`
   left: 0;
   right: 0;
   width: 100vw;
+  max-width: var(--max-width);
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -17,6 +18,7 @@ const StyledNav = styled.header`
   grid-template-areas: 
       'logo burger';
   padding-top: 1.5rem;
+  z-index: 50;
 
   h1 {
     grid-area: logo;
@@ -30,7 +32,6 @@ const StyledNav = styled.header`
 
   left: 50%;
   transform: translateX(-50%);
-  max-width: 130rem;
 }
 `;
 const Menu = styled.nav<{ isOpen: boolean }>`
@@ -49,7 +50,7 @@ const Menu = styled.nav<{ isOpen: boolean }>`
   padding: 6.5rem 0 3rem;
   transition: transform 0.3s ease-in-out;
   z-index: 10;
-  background: rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, .75);
 
 @media${device.tablet} {
   grid-area: burger;
@@ -67,7 +68,8 @@ const Menu = styled.nav<{ isOpen: boolean }>`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: #333;
+  color: #eee;
+
   white-space: nowrap;
   font-size: 2.3rem;
   font-weight: 500;
@@ -75,6 +77,7 @@ const StyledLink = styled(Link)`
 @media${device.tablet} {
   font-size: 1.6rem;
   font-weight: 400;
+  color: #333;
 }
 `;
 
@@ -89,8 +92,8 @@ export const Nav = () => {
         <StyledNav>
             <h1>Orlik</h1>
             <Burger isOpen={isOpen} setIsOpen={toggleMenuHandler}/>
-            <Menu isOpen={isOpen}>
-                <StyledLink to={Urls.auth}>Authentication</StyledLink>
+            <Menu isOpen={isOpen} onClick={toggleMenuHandler}>
+                <StyledLink to={Urls.auth}>Auth</StyledLink>
                 <StyledLink to='/'>Facilities</StyledLink>
             </Menu>
         </StyledNav>

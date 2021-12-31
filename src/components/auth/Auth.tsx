@@ -3,12 +3,12 @@ import styled from "styled-components";
 import {WithLoading} from "../hoc/WithLoading";
 import {Register} from "./Register";
 import {Login} from "./Login";
+import {device} from "../../model/Media";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  row-gap: 5rem;
 
   width: 100%;
   height: 100%;
@@ -18,8 +18,12 @@ const Box = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  height: 60rem;
+  height: 40rem;
   transition: 2s all;
+  
+  @media${device.tablet}{
+  height: 60rem;
+}
 `;
 
 const Container = styled.div`
@@ -28,13 +32,16 @@ const Container = styled.div`
   align-items: center;
 
   height: 100%;
-  width: 35rem;
-  padding: 5rem 0;
+  width: 25rem;
+  padding: 2rem 0;
   z-index: 1;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   border-radius: .5rem;
 
+@media${device.tablet} {
+  width: 35rem;
+}
 `;
 
 const Card = styled.div<{ active: boolean }>`
@@ -44,9 +51,10 @@ const Card = styled.div<{ active: boolean }>`
   height: 85%;
 
   display: flex;
-  align-items: center;
+  align-items: ${props => props.active ? 'end' :'start'};
   justify-content: center;
-  transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
+  padding: 1rem;
+  transform: ${props => props.active ? 'translate(-5rem, 25%)' : 'translate(-5rem, -25%)'};
   transition: all .65s;
 
   border-radius: .5rem;
@@ -55,12 +63,19 @@ const Card = styled.div<{ active: boolean }>`
   background-color: #BDD684;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
 
-  :hover {
-    transform: ${props => props.active ? 'translateX(calc(-100% - 9rem))' : 'translateX(calc(100% + 9rem))'};
+  @media${device.tablet}{
+  align-items: center;
+  transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
   }
 
-  :active {
-    transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
+  @media (hover: hover) and (pointer: fine) {
+    :hover {
+      transform: ${props => props.active ? 'translateX(calc(-100% - 9rem))' : 'translateX(calc(100% + 9rem))'};
+    }
+
+    :active {
+      transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
+    }
   }
 `;
 

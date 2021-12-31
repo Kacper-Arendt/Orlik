@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import {FaFemale, FaMale} from "react-icons/fa";
+import {device} from "../../model/Media";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
+@media${device.tablet} {
+  justify-content: space-evenly;
+}
 `;
 
 const Gender = styled.div<{ active: boolean }>`
@@ -18,9 +22,15 @@ const Gender = styled.div<{ active: boolean }>`
   border-radius: 5px;
 
   svg {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: ${props => props.active ? 'orange' : 'grey'};
   }
+
+@media${device.tablet} {
+  svg {
+    font-size: 3rem;
+  }
+}
 `;
 
 interface IProps {

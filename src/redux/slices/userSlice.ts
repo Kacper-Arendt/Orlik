@@ -12,11 +12,11 @@ export const userSlice = createSlice({
             const {id, email, name, photo, createdAt} = action.payload
             return {
                 ...state,
-                id,
-                email,
-                name,
-                photo,
-                createdAt
+                id: id,
+                email: email,
+                name: name,
+                photo: photo,
+                createdAt: createdAt
             }
         },
         logout() {
