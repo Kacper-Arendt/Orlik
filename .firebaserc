@@ -1,13 +1,5 @@
 {
   "projects": {
     "default": "orlik-games"
-  },
-  {
-    "hosting": {
-      "site": "orlik-games",
-
-      "public": "public",
-      ...
-    }
   }
 }
