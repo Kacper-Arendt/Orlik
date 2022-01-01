@@ -1,7 +1,23 @@
-import {doc, getDoc, setDoc} from "firebase/firestore";
+import {doc, getDoc, setDoc, updateDoc, increment} from "firebase/firestore";
 import {firestore} from './config';
 import {FirebasePath} from "../../model/Firebase";
 import {IUser} from "../../model/User";
+
+export const updateDocument = async <T>(path: FirebasePath, id: string, data: T, version: number) => {
+    const docRef = await doc(firestore, path, id);
+    await updateDoc(docRef, {
+        ...data,
+        version: increment(1),
+    });
+    const response  = await getDoc(docRef);
+    if (response.exists()) {
+        const responseDoc = response.data();
+        if (responseDoc.version !== version){
+                return 'Done'
+        } else return 'Something went wrong, try again'
+    }
+}
+
 
 export const getUserDocument = async (id: string) => {
     try {

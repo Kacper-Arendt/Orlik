@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {FaRegSun, FaUserAlt} from "react-icons/fa";
 import {
     WithLoading,
-    useFirebase,
+    useGetDoc,
     FirebasePath,
     useAppDispatch,
     useAppSelector,
@@ -103,12 +103,12 @@ const EditIcon = styled(FaRegSun)`
 export const UserProfile = () => {
     const dispatch = useAppDispatch();
     const {user} = useAppSelector(state => state);
-    const {setSearch, state} = useFirebase<IUser>({path: FirebasePath.users, id: user.id});
+    const {setSearch, state} = useGetDoc<IUser>({path: FirebasePath.users, id: user.id});
     const [edit, setEdit] = useState(false);
 
     useEffect(() => {
         setSearch(true);
-    }, [setSearch]);
+    }, [setSearch, edit]);
 
     useEffect(() => {
         if (user && !state.response) {
@@ -116,9 +116,15 @@ export const UserProfile = () => {
         }
     }, [setSearch, state.response, user]);
 
+    const editHandler = () => {
+        if (state.response) {
+            return<Edit data={state.response} handleOpen={()=>setEdit(!edit)} />
+        }
+    }
+
     return (
         <WithLoading isLoading={state.loading} error={state.message}>
-            {edit && <Edit data={user || state.response} handleOpen={()=>setEdit(!edit)} />}
+            {edit && editHandler()}
             <Wrapper>
                 <Profile>
                     <EditIcon onClick={() => setEdit(true)}/>
