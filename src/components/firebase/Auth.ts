@@ -7,8 +7,8 @@ import {
     User,
 } from 'firebase/auth';
 
-export function firebaseSignOut(): Promise<void> {
-    return signOut(firebaseAuth);
+export async function firebaseSignOut(): Promise<void> {
+    return await signOut(firebaseAuth);
 }
 
 export function loginWithEmailAndPassword(email:string, password: string): Promise<any> {

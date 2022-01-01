@@ -1,7 +1,6 @@
 import React, {ReactNode} from "react";
 import styled from "styled-components";
 import {device} from "../../model/Media";
-
 const imgUrl = 'https://ik.imagekit.io/kacper/Orlik/Vecteezy-UEFA-Character-R031821_Wp0M6I-md.jpg?updatedAt=1640806620837'
 
 const StyledForm = styled.form`

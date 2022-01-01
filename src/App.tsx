@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, {createGlobalStyle} from "styled-components";
 import {HashRouter, Route, Routes} from "react-router-dom";
-import {Urls, Nav, device} from "./components/Components";
-import {Auth} from "./components/auth/Auth";
+import {Urls, Nav, device, PrivateRoute} from "./components/Components";
+import {Auth, UserProfile} from "./components/Routes";
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -52,7 +52,10 @@ function App() {
             <HashRouter>
                 <Nav/>
                 <Routes>
-                    <Route path={Urls.auth} element={<Auth/>}/>
+                    <Route path={Urls.auth} >
+                        <Route index element={<Auth/>}/>
+                        <Route path={Urls.profile} element={<PrivateRoute children={<UserProfile/>} />}/>
+                    </Route>
                 </Routes>
             </HashRouter>
         </Wrapper>

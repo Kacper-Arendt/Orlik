@@ -7,7 +7,6 @@ import {
     useAppDispatch,
     login,
     Urls,
-    useAppSelector
 } from "../Components";
 import {IProps} from "./Auth";
 import {useNavigate} from "react-router-dom";
@@ -19,9 +18,8 @@ const initVal = {
 
 export const Login = (props: IProps) => {
     const dispatch = useAppDispatch();
-    const {fields, handleChange, reset} = useField(initVal);
+    const {fields, handleChange} = useField(initVal);
     const navigate = useNavigate();
-    const {user} = useAppSelector(state => state);
 
     const onSubmitHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -31,16 +29,14 @@ export const Login = (props: IProps) => {
 
             if (request._tokenResponse.localId) {
                 const userDoc = await getUserDocument(request._tokenResponse.localId);
-                userDoc && dispatch(login(userDoc));
-                reset();
+                if (userDoc) {
+                    dispatch(login(userDoc));
+                    navigate(Urls.profile);
+                }
             }
         } catch (e) {
-            props.setError('Coś poszło nie tak');
-        } finally {
             props.setLoading(false);
-            if (user.email) {
-                navigate(Urls.home);
-            }
+            props.setError('Something went wrong, Try Again');
         }
     };
 

@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {WithLoading} from "../hoc/WithLoading";
-import {Register} from "./Register";
-import {Login} from "./Login";
+import {WithLoading, useAuth, Register, Login, Urls} from "../Components";
 import {device} from "../../model/Media";
+import {Link} from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,17 +11,24 @@ const Wrapper = styled.div`
 
   width: 100%;
   height: 100%;
+  
+  a{
+    margin-top: 8rem;
+    align-self: start;
+    font-size: 2rem;
+    text-decoration: none;
+  }
 `;
 
 const Box = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  
+
   height: 40rem;
   transition: 2s all;
-  
-  @media${device.tablet}{
+
+@media${device.tablet} {
   height: 60rem;
 }
 `;
@@ -52,7 +58,7 @@ const Card = styled.div<{ active: boolean }>`
   height: 85%;
 
   display: flex;
-  align-items: ${props => props.active ? 'end' :'start'};
+  align-items: ${props => props.active ? 'end' : 'start'};
   justify-content: center;
   padding: 1rem;
   transform: ${props => props.active ? 'translate(-5rem, 25%)' : 'translate(-5rem, -25%)'};
@@ -64,12 +70,12 @@ const Card = styled.div<{ active: boolean }>`
   background-color: #BDD684;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
 
-  @media${device.tablet}{
+@media${device.tablet} {
   align-items: center;
   transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
-  }
+}
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (hover: hover) and (pointer: fine) and ${device.tablet} {
     :hover {
       transform: ${props => props.active ? 'translateX(calc(-100% - 9rem))' : 'translateX(calc(100% + 9rem))'};
     }
@@ -89,37 +95,40 @@ export const Auth = () => {
     const [login, setLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const logged = useAuth();
 
     return (
         <WithLoading isLoading={loading} error={error}>
             <Wrapper>
-                <Box>
-                    {login ?
-                        <>
-                            <Card active={login} onClick={() => setLogin(false)}>
-                                <p>Register</p>
-                            </Card>
-                            <Container>
-                                <Login
-                                    setLoading={(val: boolean) => setLoading(val)}
-                                    setError={(val: string) => setError(val)}
-                                />
-                            </Container>
-                        </>
-                        :
-                        <>
-                            <Card active={login} onClick={() => setLogin(true)}>
-                                <p>Login</p>
-                            </Card>
-                            <Container>
-                                <Register
-                                    setLoading={(val: boolean) => setLoading(val)}
-                                    setError={(val: string) => setError(val)}
-                                />
-                            </Container>
-                        </>
-                    }
-                </Box>
+                {logged ? <Link to={Urls.profile}>Redirect to profile</Link> :
+                    <Box>
+                        {login ?
+                            <>
+                                <Card active={login} onClick={() => setLogin(false)}>
+                                    <p>Register</p>
+                                </Card>
+                                <Container>
+                                    <Login
+                                        setLoading={(val: boolean) => setLoading(val)}
+                                        setError={(val: string) => setError(val)}
+                                    />
+                                </Container>
+                            </>
+                            :
+                            <>
+                                <Card active={login} onClick={() => setLogin(true)}>
+                                    <p>Login</p>
+                                </Card>
+                                <Container>
+                                    <Register
+                                        setLoading={(val: boolean) => setLoading(val)}
+                                        setError={(val: string) => setError(val)}
+                                    />
+                                </Container>
+                            </>
+                        }
+                    </Box>
+                }
             </Wrapper>
         </WithLoading>
     )
