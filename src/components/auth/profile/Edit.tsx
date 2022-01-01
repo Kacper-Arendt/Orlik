@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {FaUserAlt} from "react-icons/fa";
 import {
     ChooseGender,
     FirebasePath,
     IUser,
     Popup,
     uploadPhoto,
-    useField,
+    useField, UserImage,
     useSaveDoc,
     WithLoading
 } from "../../Components";
@@ -15,8 +14,9 @@ import {device} from "../../../model/Media";
 
 const EditForm = styled.form`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 1rem;
 
   width: 30rem;
@@ -40,10 +40,42 @@ const EditForm = styled.form`
     border-radius: 3px;
     padding: .5rem;
   }
+
+@media${device.tablet} {
+  width: 40rem;
+  font-size: 2rem;
+
+  input {
+    padding: .75rem;
+    width: 25rem;
+  }
+}
+`;
+
+const Button = styled.button`
+  width: 8rem;
+  padding: .75rem;
+
+  font-size: 1.6rem;
+  background-color: transparent;
+  border: 2px solid green;
+  border-radius: 3px;
+
+  :first-of-type {
+    border: 2px solid red;
+  }
+
+@media${device.tablet} {
+  width: 10rem;
+}
 `;
 
 const Image = styled.div`
-  img, svg {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  img {
     width: 7.5rem;
     height: 7.5rem;
     border-radius: 100%;
@@ -51,13 +83,9 @@ const Image = styled.div`
     object-fit: cover;
   }
 
-  svg {
-    background-color: #eee;
-    padding: .5rem;
-  }
 
 @media${device.tablet} {
-  img, svg {
+  img {
     width: 12.5rem;
     height: 12.5rem;
   }
@@ -116,13 +144,7 @@ export const Edit = (props: IProps) => {
                         {photo.url ?
                             <img src={photo.url} alt="User"/>
                             :
-                            <>
-                                {props.data.photo ?
-                                    <img src={props.data.photo} alt="User"/>
-                                    :
-                                    <FaUserAlt/>
-                                }
-                            </>
+                            <UserImage photo={props.data.photo}/>
                         }
                     </Image>
                     <label>
@@ -148,11 +170,10 @@ export const Edit = (props: IProps) => {
                     <ChooseGender
                         gender={fields.gender}
                         setGender={(val) => setFields({...fields, gender: val})}/>
-                    <button onClick={props.handleOpen} type='button'>Cancel</button>
-                    <button type='submit'>Submit</button>
+                    <Button onClick={props.handleOpen} type='button'>Cancel</Button>
+                    <Button type='submit'>Submit</Button>
                 </EditForm>
             </Popup>
         </WithLoading>
-
     )
 }

@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {Burger} from "./Burger";
 import {Link} from "react-router-dom";
+import {Burger} from "./Burger";
 import {device} from "../../model/Media";
-import {Urls} from "../../model/Urls";
-import {useAppSelector} from "../../redux/Hooks";
+import {Urls, useAppSelector} from "../Components";
 import {Profile} from "./Profile";
 
 const StyledNav = styled.header`
