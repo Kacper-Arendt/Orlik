@@ -11,9 +11,9 @@ export const useAuth = () => {
         const isAuthHandler = async () => {
             await checkIsAuth(user => {
                 if (user) {
-                    setLogged(true);
                     setUserId(user.uid);
-                } else setLogged(false)
+                } else
+                    setLogged(false)
             });
         }
         isAuthHandler();
@@ -25,6 +25,7 @@ export const useAuth = () => {
             const userDoc = await getUserDocument(id);
             if (userDoc) {
                 dispatch(login(userDoc));
+                setLogged(true)
             }
         }
 

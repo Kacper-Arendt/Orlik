@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {FaRegSun, FaUserAlt} from "react-icons/fa";
+import {FaRegSun} from "react-icons/fa";
 import {
     WithLoading,
     useGetDoc,
@@ -9,7 +9,7 @@ import {
     useAppSelector,
     IUser,
     logout,
-    device,
+    device, firebaseSignOut, UserImage,
 } from "../../Components";
 import {Edit} from "./Edit";
 
@@ -66,28 +66,6 @@ const Profile = styled.div`
 }
 `;
 
-const Image = styled.div`
-  img, svg {
-    width: 7.5rem;
-    height: 7.5rem;
-    border-radius: 100%;
-    border: 2px solid orange;
-    object-fit: cover;
-  }
-
-  svg {
-    background-color: #eee;
-    padding: .5rem;
-  }
-
-@media${device.tablet} {
-  img, svg {
-    width: 12.5rem;
-    height: 12.5rem;
-  }
-}
-`;
-
 const EditIcon = styled(FaRegSun)`
   position: absolute;
   top: 2rem;
@@ -118,7 +96,16 @@ export const UserProfile = () => {
 
     const editHandler = () => {
         if (state.response) {
-            return<Edit data={state.response} handleOpen={()=>setEdit(!edit)} />
+            return <Edit data={state.response} handleOpen={() => setEdit(!edit)}/>
+        }
+    }
+
+    const logoutHandler = async () => {
+        try {
+            await firebaseSignOut();
+            dispatch(logout());
+        } catch (e) {
+            console.log(e)
         }
     }
 
@@ -128,16 +115,10 @@ export const UserProfile = () => {
             <Wrapper>
                 <Profile>
                     <EditIcon onClick={() => setEdit(true)}/>
-                    <Image>
-                        {state.response?.photo ?
-                            <img src={state.response.photo} alt="User"/>
-                            :
-                            <FaUserAlt/>
-                        }
-                    </Image>
+                    <UserImage photo={state.response?.photo} />
                     <p>{state.response?.name}</p>
                 </Profile>
-                <button onClick={() => dispatch(logout())}>Logout</button>
+                <button onClick={logoutHandler}>Logout</button>
             </Wrapper>
         </WithLoading>
     )

@@ -30,7 +30,6 @@ export const uploadPhoto = async (path: FirebasePath, id: string, img: any): Pro
     }
 }
 
-
 export const getUserDocument = async (id: string) => {
     try {
         const docRef = doc(firestore, FirebasePath.users, id);

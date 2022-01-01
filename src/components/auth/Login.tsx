@@ -18,7 +18,7 @@ const initVal = {
 
 export const Login = (props: IProps) => {
     const dispatch = useAppDispatch();
-    const {fields, handleChange, reset} = useField(initVal);
+    const {fields, handleChange} = useField(initVal);
     const navigate = useNavigate();
 
     const onSubmitHandler = async (e: React.SyntheticEvent) => {
@@ -31,8 +31,6 @@ export const Login = (props: IProps) => {
                 const userDoc = await getUserDocument(request._tokenResponse.localId);
                 if (userDoc) {
                     dispatch(login(userDoc));
-                    reset();
-                    props.setLoading(false);
                     navigate(Urls.profile);
                 }
             }

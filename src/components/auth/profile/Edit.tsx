@@ -71,22 +71,22 @@ interface IProps {
 
 export const Edit = (props: IProps) => {
     const [photo, setPhoto] = useState({url: '', file: ''});
-    const [gender, setGender] = useState(props.data.gender);
     const {fields, handleChange, setFields} = useField(props.data);
-    const {setSearch, state} = useSaveDoc<IUser, string>(
+    const {setSearch, state, clearData} = useSaveDoc<IUser, string>(
         {
             path: FirebasePath.users,
             id: fields.id,
-            data: {...fields, gender: gender,},
+            data: fields,
             version: fields.version
         });
 
     useEffect(() => {
         if (state.response === 'Done') {
+            clearData();
             setSearch(false);
             props.handleOpen();
         }
-    }, [state, props, setSearch]);
+    }, [state, props, setSearch, clearData]);
 
     const onImageChange = (e: any) => {
         if (e.target.files && e.target.files[0]) {
@@ -95,7 +95,7 @@ export const Edit = (props: IProps) => {
                 url: URL.createObjectURL(e.target.files[0])
             });
         }
-    }
+    };
 
     const onSubmitHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -106,7 +106,7 @@ export const Edit = (props: IProps) => {
                 setSearch(true);
             }
         } else setSearch(true)
-    }
+    };
 
     return (
         <WithLoading isLoading={state.loading} error={state.message}>
@@ -126,7 +126,7 @@ export const Edit = (props: IProps) => {
                         }
                     </Image>
                     <label>
-                        Upload Image:
+                        Upload Image: (2mb max)
                         <input accept="image/*" type="file" onChange={onImageChange}/>
                     </label>
                     <label>
@@ -145,7 +145,9 @@ export const Edit = (props: IProps) => {
                         Postal code:
                         <input name='postalCode' value={fields.postalCode} type="text" onChange={handleChange}/>
                     </label>
-                    <ChooseGender gender={gender} setGender={(val) => setGender(val)}/>
+                    <ChooseGender
+                        gender={fields.gender}
+                        setGender={(val) => setFields({...fields, gender: val})}/>
                     <button onClick={props.handleOpen} type='button'>Cancel</button>
                     <button type='submit'>Submit</button>
                 </EditForm>

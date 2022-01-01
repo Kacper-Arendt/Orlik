@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {IUser} from "../../model/User";
-import {firebaseSignOut} from "../../components/firebase/Auth";
 
 const initialState = {} as IUser
 
@@ -25,7 +24,6 @@ export const userSlice = createSlice({
             }
         },
         logout() {
-            firebaseSignOut();
             return initialState
         },
 

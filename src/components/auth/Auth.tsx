@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {WithLoading, useAuth, Register, Login} from "../Components";
+import {WithLoading, useAuth, Register, Login, Urls} from "../Components";
 import {device} from "../../model/Media";
+import {Link} from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,6 +11,13 @@ const Wrapper = styled.div`
 
   width: 100%;
   height: 100%;
+  
+  a{
+    margin-top: 8rem;
+    align-self: start;
+    font-size: 2rem;
+    text-decoration: none;
+  }
 `;
 
 const Box = styled.div`
@@ -67,7 +75,7 @@ const Card = styled.div<{ active: boolean }>`
   transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
 }
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (hover: hover) and (pointer: fine) and ${device.tablet} {
     :hover {
       transform: ${props => props.active ? 'translateX(calc(-100% - 9rem))' : 'translateX(calc(100% + 9rem))'};
     }
@@ -89,38 +97,38 @@ export const Auth = () => {
     const [error, setError] = useState('');
     const logged = useAuth();
 
-    if (logged) return null;
-
     return (
         <WithLoading isLoading={loading} error={error}>
             <Wrapper>
-                <Box>
-                    {login ?
-                        <>
-                            <Card active={login} onClick={() => setLogin(false)}>
-                                <p>Register</p>
-                            </Card>
-                            <Container>
-                                <Login
-                                    setLoading={(val: boolean) => setLoading(val)}
-                                    setError={(val: string) => setError(val)}
-                                />
-                            </Container>
-                        </>
-                        :
-                        <>
-                            <Card active={login} onClick={() => setLogin(true)}>
-                                <p>Login</p>
-                            </Card>
-                            <Container>
-                                <Register
-                                    setLoading={(val: boolean) => setLoading(val)}
-                                    setError={(val: string) => setError(val)}
-                                />
-                            </Container>
-                        </>
-                    }
-                </Box>
+                {logged ? <Link to={Urls.profile}>Redirect to profile</Link> :
+                    <Box>
+                        {login ?
+                            <>
+                                <Card active={login} onClick={() => setLogin(false)}>
+                                    <p>Register</p>
+                                </Card>
+                                <Container>
+                                    <Login
+                                        setLoading={(val: boolean) => setLoading(val)}
+                                        setError={(val: string) => setError(val)}
+                                    />
+                                </Container>
+                            </>
+                            :
+                            <>
+                                <Card active={login} onClick={() => setLogin(true)}>
+                                    <p>Login</p>
+                                </Card>
+                                <Container>
+                                    <Register
+                                        setLoading={(val: boolean) => setLoading(val)}
+                                        setError={(val: string) => setError(val)}
+                                    />
+                                </Container>
+                            </>
+                        }
+                    </Box>
+                }
             </Wrapper>
         </WithLoading>
     )
