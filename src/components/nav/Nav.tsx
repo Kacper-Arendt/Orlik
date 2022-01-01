@@ -42,16 +42,16 @@ const Menu = styled.nav<{ isOpen: boolean }>`
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: start;
   row-gap: 2rem;
 
   width: 75%;
-  transform: ${props => props.isOpen ? 'translateX(35%)' : 'translateX(165%)'};
+  transform: ${props => props.isOpen ? 'translateX(55%)' : 'translateX(165%)'};
   padding: 6.5rem 0 3rem;
   transition: transform 0.3s ease-in-out;
   z-index: 10;
-  background: rgba(0, 0, 0, .75);
+  background-color: #8BA68A;
 
 @media${device.tablet} {
   grid-area: burger;
@@ -69,13 +69,17 @@ const Menu = styled.nav<{ isOpen: boolean }>`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: #eee;
-
+  color: #000;
+  
+  padding: 0 5rem .5rem 2rem;
   white-space: nowrap;
   font-size: 2.3rem;
   font-weight: 500;
+  border-bottom: 1px solid #000;
 
 @media${device.tablet} {
+  padding: 0;
+  border: 0;
   font-size: 1.6rem;
   font-weight: 400;
   color: #333;

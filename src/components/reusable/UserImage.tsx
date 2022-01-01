@@ -11,6 +11,7 @@ const Image = styled.div<{size: string}>`
     border-radius: 100%;
     border: 2px solid orange;
     object-fit: cover;
+    background-color: #eee;
   }
 
   svg {
