@@ -149,7 +149,7 @@ export const Edit = (props: IProps) => {
                         }
                     </Image>
                     <label>
-                        Upload Image: (2mb max)
+                        Upload Image: (5mb max)
                         <input accept="image/*" type="file" onChange={onImageChange}/>
                     </label>
                     <label>

@@ -58,8 +58,7 @@ const Card = styled.div<{ active: boolean }>`
   height: 85%;
 
   display: flex;
-  z-index: 3;
-  align-items: ${props => props.active ? 'end' : 'start'};
+  align-items: start;
   justify-content: center;
   padding: 1rem;
   transform: ${props => props.active ? 'translate(-5rem, 25%)' : 'translate(-5rem, -25%)'};
@@ -70,10 +69,17 @@ const Card = styled.div<{ active: boolean }>`
   color: #fff;
   background-color: #BDD684;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+  
+  p{
+    margin-top: ${props => props.active && 'auto'};
+  }
 
 @media${device.tablet} {
   align-items: center;
   transform: ${props => props.active ? 'translateX(calc(-100% - 7.5rem))' : 'translateX(calc(100% + 7.5rem))'};
+  p{
+    margin-top: 0;
+  }
 }
 
   @media (hover: hover) and (pointer: fine) and ${device.tablet} {
