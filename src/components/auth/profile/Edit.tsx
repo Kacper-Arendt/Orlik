@@ -1,7 +1,16 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {FaUserAlt} from "react-icons/fa";
-import {Popup, IUser, ChooseGender, useField, FirebasePath, useSaveDoc, WithLoading} from "../../Components";
+import {
+    ChooseGender,
+    FirebasePath,
+    IUser,
+    Popup,
+    uploadPhoto,
+    useField,
+    useSaveDoc,
+    WithLoading
+} from "../../Components";
 import {device} from "../../../model/Media";
 
 const EditForm = styled.form`
@@ -61,13 +70,14 @@ interface IProps {
 }
 
 export const Edit = (props: IProps) => {
+    const [photo, setPhoto] = useState({url: '', file: ''});
     const [gender, setGender] = useState(props.data.gender);
-    const {fields, handleChange} = useField(props.data);
+    const {fields, handleChange, setFields} = useField(props.data);
     const {setSearch, state} = useSaveDoc<IUser, string>(
         {
             path: FirebasePath.users,
             id: fields.id,
-            data: {...fields, photo: '', gender: gender,},
+            data: {...fields, gender: gender,},
             version: fields.version
         });
 
@@ -78,17 +88,47 @@ export const Edit = (props: IProps) => {
         }
     }, [state, props, setSearch]);
 
+    const onImageChange = (e: any) => {
+        if (e.target.files && e.target.files[0]) {
+            setPhoto({
+                file: e.target.files[0],
+                url: URL.createObjectURL(e.target.files[0])
+            });
+        }
+    }
+
+    const onSubmitHandler = async (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        if (photo.file) {
+            const uploadedPhoto = await uploadPhoto(FirebasePath.users, props.data.id, photo.file);
+            if (uploadedPhoto) {
+                setFields({...fields, photo: uploadedPhoto});
+                setSearch(true);
+            }
+        } else setSearch(true)
+    }
+
     return (
         <WithLoading isLoading={state.loading} error={state.message}>
             <Popup>
-                <EditForm onSubmit={()=> setSearch(true)}>
+                <EditForm onSubmit={onSubmitHandler}>
                     <Image>
-                        {props.data.photo ?
-                            <img src="" alt="User"/>
+                        {photo.url ?
+                            <img src={photo.url} alt="User"/>
                             :
-                            <FaUserAlt/>
+                            <>
+                                {props.data.photo ?
+                                    <img src={props.data.photo} alt="User"/>
+                                    :
+                                    <FaUserAlt/>
+                                }
+                            </>
                         }
                     </Image>
+                    <label>
+                        Upload Image:
+                        <input accept="image/*" type="file" onChange={onImageChange}/>
+                    </label>
                     <label>
                         Name:
                         <input name='name' value={fields.name} type="text" minLength={3} onChange={handleChange}/>

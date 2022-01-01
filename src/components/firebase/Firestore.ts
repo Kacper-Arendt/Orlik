@@ -1,4 +1,5 @@
 import {doc, getDoc, setDoc, updateDoc, increment} from "firebase/firestore";
+import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {firestore} from './config';
 import {FirebasePath} from "../../model/Firebase";
 import {IUser} from "../../model/User";
@@ -9,12 +10,23 @@ export const updateDocument = async <T>(path: FirebasePath, id: string, data: T,
         ...data,
         version: increment(1),
     });
-    const response  = await getDoc(docRef);
+    const response = await getDoc(docRef);
     if (response.exists()) {
         const responseDoc = response.data();
-        if (responseDoc.version !== version){
-                return 'Done'
-        } else return 'Something went wrong, try again'
+        if (responseDoc.version !== version) {
+            return 'Done'
+        }
+    }
+}
+
+export const uploadPhoto = async (path: FirebasePath, id: string, img: any): Promise<any> => {
+    try {
+        const storage = getStorage();
+        const photoRef = ref(storage, `${path}/${id}`);
+        const upload = uploadBytesResumable(photoRef, img, {contentType: 'image/jpeg'});
+        return await getDownloadURL(upload.snapshot.ref);
+    } catch (e) {
+        console.log(e)
     }
 }
 

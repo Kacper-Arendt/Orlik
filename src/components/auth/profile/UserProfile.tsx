@@ -130,7 +130,7 @@ export const UserProfile = () => {
                     <EditIcon onClick={() => setEdit(true)}/>
                     <Image>
                         {state.response?.photo ?
-                            <img src="" alt="User"/>
+                            <img src={state.response.photo} alt="User"/>
                             :
                             <FaUserAlt/>
                         }
