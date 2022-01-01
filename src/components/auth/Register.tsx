@@ -64,6 +64,7 @@ export const Register = (props: IProps) => {
                             value={fields.name}
                             onChange={handleChange}
                             minLength={3}
+                            maxLength={14}
                             required
                         />
                     </label>

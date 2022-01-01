@@ -60,6 +60,7 @@ const Button = styled.button`
   background-color: transparent;
   border: 2px solid green;
   border-radius: 3px;
+  color: #000;
 
   :first-of-type {
     border: 2px solid red;
@@ -153,7 +154,12 @@ export const Edit = (props: IProps) => {
                     </label>
                     <label>
                         Name:
-                        <input name='name' value={fields.name} type="text" minLength={3} onChange={handleChange}/>
+                        <input name='name'
+                               value={fields.name}
+                               type="text"
+                               minLength={3}
+                               maxLength={14}
+                               onChange={handleChange}/>
                     </label>
                     <label>
                         Age:

@@ -58,6 +58,7 @@ const Card = styled.div<{ active: boolean }>`
   height: 85%;
 
   display: flex;
+  z-index: 3;
   align-items: ${props => props.active ? 'end' : 'start'};
   justify-content: center;
   padding: 1rem;

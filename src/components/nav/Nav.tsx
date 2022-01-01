@@ -46,14 +46,15 @@ const Menu = styled.nav<{ isOpen: boolean }>`
   justify-content: start;
   row-gap: 2rem;
 
-  width: 75%;
-  transform: ${props => props.isOpen ? 'translateX(55%)' : 'translateX(165%)'};
+  width: 80%;
+  transform: ${props => props.isOpen ? 'translateX(25%)' : 'translateX(165%)'};
   padding: 6.5rem 0 3rem;
   transition: transform 0.3s ease-in-out;
   z-index: 10;
   background-color: #8BA68A;
-
-@media${device.tablet} {
+@media${device.mobileM}{
+  transform: ${props => props.isOpen ? 'translateX(55%)' : 'translateX(165%)'};
+}@media${device.tablet} {
   grid-area: burger;
   position: static;
 
