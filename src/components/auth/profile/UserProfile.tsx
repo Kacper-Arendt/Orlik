@@ -12,6 +12,7 @@ import {
     device, firebaseSignOut, UserImage,
 } from "../../Components";
 import {Edit} from "./Edit";
+import {BgcArray} from "./BackgroundPicker";
 
 const Wrapper = styled.div`
   align-self: center;
@@ -43,20 +44,20 @@ const Profile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: end;
   gap: 2rem;
 
   width: 100%;
   min-height: 20rem;
   padding: 4rem 1rem;
-  background: #06beb6;
-  background: linear-gradient(to right, #06beb6, #48b1bf);
 
   p {
     font-size: 2rem;
+    color: #fff;
   }
 
 @media${device.tablet} {
-  width: 35%;
+  width: 35rem;
   align-self: start;
   padding-left: 3rem;
 
@@ -70,11 +71,12 @@ const EditIcon = styled(FaRegSun)`
   position: absolute;
   top: 2rem;
   right: 2rem;
-  cursor: pointer;
-
-  font-size: 2rem;
-@media${device.tablet} {
+  
+  color: #fff;
   font-size: 2.5rem;
+  cursor: pointer;
+@media${device.tablet} {
+  font-size: 3rem;
 }
 `;
 
@@ -113,9 +115,12 @@ export const UserProfile = () => {
         <WithLoading isLoading={state.loading} error={state.message}>
             {edit && editHandler()}
             <Wrapper>
-                <Profile>
+                <Profile  style={{
+                    background: `${BgcArray[state.response ? state.response.backgroundColor : 0].fallback} 
+                    ${BgcArray[state.response ? state.response.backgroundColor : 0].bgc}`
+                }}>
                     <EditIcon onClick={() => setEdit(true)}/>
-                    <UserImage photo={state.response?.photo} />
+                    <UserImage photo={state.response?.photo}/>
                     <p>{state.response?.name}</p>
                 </Profile>
                 <button onClick={logoutHandler}>Logout</button>

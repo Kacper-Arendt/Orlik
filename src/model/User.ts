@@ -3,6 +3,7 @@ export interface INewUser {
     readonly id: string,
     readonly createdAt: string,
     version: number,
+    backgroundColor: number,
 }
 
 export interface IUser extends INewUser{

@@ -29,7 +29,7 @@ export const Register = (props: IProps) => {
                     fields.email,
                     registerUser.user.metadata.creationTime!,
                     fields.name,
-                    gender
+                    gender,
                 );
                 reset();
             }
