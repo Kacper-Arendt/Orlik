@@ -11,6 +11,7 @@ import {
     WithLoading
 } from "../../Components";
 import {device} from "../../../model/Media";
+import {BackgroundPicker} from "./BackgroundPicker";
 
 const EditForm = styled.form`
   display: flex;
@@ -149,8 +150,14 @@ export const Edit = (props: IProps) => {
                         }
                     </Image>
                     <label>
-                        Upload Image: (5mb max)
+                        Image: (5mb max)
                         <input accept="image/*" type="file" onChange={onImageChange}/>
+                    </label>
+                    <label>
+                        Background:
+                        <BackgroundPicker
+                            bgcId={fields.backgroundColor}
+                            chooseBgc={(val) => setFields({...fields, backgroundColor: val})}/>
                     </label>
                     <label>
                         Name:

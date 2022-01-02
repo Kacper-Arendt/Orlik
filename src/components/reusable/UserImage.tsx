@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {device} from "../../model/Media";
 
 
-const Image = styled.div<{size: string}>`
+const Image = styled.div<{ size: string }>`
   img, svg {
     width: ${props => props.size};
     height: ${props => props.size};
