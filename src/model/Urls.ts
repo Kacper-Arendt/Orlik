@@ -1,5 +1,7 @@
 export enum Urls {
     home = '/',
     auth = '/auth',
-    profile = 'profile'
+    profile = 'profile',
+    facilities = '/facilities',
+    addFacility ='add',
 }
