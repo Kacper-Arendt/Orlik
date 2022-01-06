@@ -3,23 +3,17 @@ import styled from "styled-components";
 import {IoMdAdd} from "react-icons/io";
 import {useNavigate} from "react-router-dom";
 import {Urls} from "../../model/Urls";
+import {WrapperStyles} from "../reusable/Css";
 
 const Wrapper = styled.div`
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-
-
-  width: 100%;
-  max-width: var(--max-width);
-  margin-top: 10rem;
-  padding: 0 2rem;
+  ${WrapperStyles};
 `;
 
 const Nav = styled.div`
+  align-self: start;
   display: flex;
   flex-direction: column;
+  padding: 2rem 3rem;
 `;
 
 const NavItem = styled.div`
@@ -31,14 +25,14 @@ const NavItem = styled.div`
   border-radius: 50px;
   background-color: #eee;
   font-size: 1.2rem;
-  
-  
-  p{
+
+
+  p {
     font-weight: 500;
     white-space: nowrap;
   }
-  
-  svg{
+
+  svg {
     color: green;
     font-size: 2em;
   }
@@ -51,7 +45,7 @@ export const Facilities = () => {
     return (
         <Wrapper>
             <Nav>
-                <NavItem onClick={()=> navigate(Urls.addFacility)}>
+                <NavItem onClick={() => navigate(Urls.addFacility)}>
                     <p> Add Facility</p>
                     <IoMdAdd/>
                 </NavItem>

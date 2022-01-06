@@ -34,6 +34,8 @@ const GlobalStyle = createGlobalStyle`
   
   :root{
     --max-width: 100rem;
+    --color-submit: #168039;
+    --color-reset: #D90B1C;
   }
 `;
 
