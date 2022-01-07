@@ -7,7 +7,7 @@ import {
     Popup,
     uploadPhoto,
     useField, UserImage,
-    useSaveDoc,
+    useUpdateDoc,
     WithLoading
 } from "../../Components";
 import {device} from "../../../model/Media";
@@ -102,7 +102,7 @@ interface IProps {
 export const Edit = (props: IProps) => {
     const [photo, setPhoto] = useState({url: '', file: ''});
     const {fields, handleChange, setFields} = useField(props.data);
-    const {setSearch, state, clearData} = useSaveDoc<IUser, string>(
+    const {setSearch, state, clearData} = useUpdateDoc<IUser, string>(
         {
             path: FirebasePath.users,
             id: fields.id,

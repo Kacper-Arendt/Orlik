@@ -1,16 +1,41 @@
 import React from "react";
 import styled from "styled-components";
 import {WrapperStyles} from "../reusable/Css";
-import {useField} from "../hoc/hooks/useField";
+import {FirebasePath, useField, WithLoading, useLoading, generateDoc} from "../Components";
+import {device} from "../../model/Media";
 
 const Wrapper = styled.div`
   ${WrapperStyles};
-  row-gap: 5rem;
+  display: grid;
   align-items: start;
-  max-width: 60rem;
-  width: 100%;
-  padding:  3rem 0;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+  row-gap: 5rem;
 
+  width: 100%;
+  max-width: 65rem;
+  padding: 3rem 0;
+
+  img {
+    display: none;
+  }
+
+@media${device.mobileM} {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: min-content min-content;
+  grid-template-areas: 
+    "header form"
+   "img form";
+  gap: 0;
+  margin-top: 10rem;
+
+  img {
+    grid-area: img;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
 `;
 
 const Header = styled.header`
@@ -19,6 +44,9 @@ const Header = styled.header`
   row-gap: 1rem;
   padding: 0 2rem;
   font-size: 1.4rem;
+@media${device.mobileM} {
+  grid-area: header;
+}
 `;
 
 const Form = styled.form`
@@ -59,14 +87,19 @@ const Form = styled.form`
     font-size: .9em;
     color: #fff;
     cursor: pointer;
-    
-    :first-of-type{
+
+    :first-of-type {
       background-color: var(--color-reset);
     }
-    :last-of-type{
+
+    :last-of-type {
       background-color: var(--color-submit);
     }
   }
+
+@media${device.mobileM} {
+  grid-area: form;
+}
 `;
 
 const initialState = {
@@ -78,84 +111,96 @@ const initialState = {
 }
 
 export const AddFacility = () => {
-    const {fields, handleChange, reset} = useField(initialState)
+    const {fields, handleChange, reset} = useField(initialState);
+    const {loading, setLoading, error, setError} = useLoading();
 
-    const onSubmitHandler = (e: React.SyntheticEvent) => {
+    const onSubmitHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        console.log(fields)
-
+        try {
+            setLoading(true);
+            const add = await generateDoc(FirebasePath.facilities, fields);
+            add.id && reset();
+        } catch (e) {
+            setError('Something went wrong, Try again')
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
-        <Wrapper>
-            <Header>
-                <h2>Create a new Facility</h2>
-                <p>The facility includes all information about it, such as: address, owners and playing fields.</p>
-                <p>Thank you for building our community</p>
-            </Header>
-            <Form onSubmit={onSubmitHandler}>
-                <label>
-                    Name
-                    <input
-                        type="text"
-                        name='name'
-                        value={fields.name}
-                        required
-                        minLength={5}
-                        maxLength={25}
-                        onChange={handleChange}
-                    />
-                </label>
-                <label>
-                    City
-                    <input
-                        type="text"
-                        name='city'
-                        value={fields.city}
-                        minLength={2}
-                        required
-                        maxLength={25}
-                        onChange={handleChange}
-                    />
-                </label>
-                <label>
-                    Street
-                    <input
-                        type="text"
-                        name='street'
-                        value={fields.street}
-                        minLength={3}
-                        required
-                        maxLength={25}
-                        onChange={handleChange}
-                    />
-                </label>
-                <label>
-                    Street number
-                    <input
-                        type="text"
-                        name='streetNumber'
-                        value={fields.streetNumber}
-                        minLength={1}
-                        required
-                        maxLength={8}
-                        onChange={handleChange}
-                    />
-                </label>
-                <label>
-                    Postal-code
-                    <input
-                        type="text"
-                        name='postalCode'
-                        value={fields.postalCode}
-                        minLength={6}
-                        required
-                        onChange={handleChange}
-                    />
-                </label>
-                <button type='reset' onClick={reset}>Reset</button>
-                <button type='submit'>Add</button>
-            </Form>
-        </Wrapper>
+        <WithLoading isLoading={loading} error={error}>
+            <Wrapper>
+                <Header>
+                    <h2>Create a new Facility</h2>
+                    <p>The facility includes all information about it, such as: address, owners and playing fields.</p>
+                    <p>Thank you for building our community</p>
+                </Header>
+                <Form onSubmit={onSubmitHandler}>
+                    <label>
+                        Name
+                        <input
+                            type="text"
+                            name='name'
+                            value={fields.name}
+                            required
+                            minLength={5}
+                            maxLength={25}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        City
+                        <input
+                            type="text"
+                            name='city'
+                            value={fields.city}
+                            minLength={2}
+                            required
+                            maxLength={25}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        Street
+                        <input
+                            type="text"
+                            name='street'
+                            value={fields.street}
+                            minLength={3}
+                            required
+                            maxLength={25}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        Street number
+                        <input
+                            type="text"
+                            name='streetNumber'
+                            value={fields.streetNumber}
+                            minLength={1}
+                            required
+                            maxLength={8}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        Postal-code
+                        <input
+                            type="text"
+                            name='postalCode'
+                            value={fields.postalCode}
+                            minLength={6}
+                            required
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <button type='reset' onClick={reset}>Reset</button>
+                    <button type='submit'>Add</button>
+                </Form>
+                <img src="https://ik.imagekit.io/kacper/Orlik/woman-writting_u2dKEUdj6lh.jpg?updatedAt=1641559901818"
+                     alt="typewriter"/>
+            </Wrapper>
+        </WithLoading>
     )
 }

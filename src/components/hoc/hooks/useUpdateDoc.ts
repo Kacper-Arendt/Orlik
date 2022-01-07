@@ -15,7 +15,7 @@ interface ISaveDoc<T> {
     version: number
 }
 
-export const useSaveDoc = <T, R>(props: ISaveDoc<T>): IResponse<R> => {
+export const useUpdateDoc = <T, R>(props: ISaveDoc<T>): IResponse<R> => {
     const [search, setSearch] = useState(false);
     const [state, dispatch] = useReducer(firebaseReducer, initState);
 

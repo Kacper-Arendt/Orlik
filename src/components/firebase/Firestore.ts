@@ -1,4 +1,4 @@
-import {doc, getDoc, setDoc, updateDoc, increment} from "firebase/firestore";
+import {doc, collection, getDoc, setDoc, updateDoc, increment, addDoc} from "firebase/firestore";
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {firestore} from './config';
 import {FirebasePath} from "../../model/Firebase";
@@ -68,6 +68,14 @@ export const generateUserDocument = async (
             return await setDoc(docRef, {id, email, createdAt, name, gender, backgroundColor: 0});
         } else {
         }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const generateDoc = async (path: FirebasePath, data: {}): Promise<any> => {
+    try {
+        return  await addDoc(collection(firestore, path), data);
     } catch (error) {
         console.log(error);
     }

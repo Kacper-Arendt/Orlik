@@ -10,8 +10,9 @@ export * from './reusable/UserImage';
 export * from './hoc/WithLoading';
 export * from './hoc/hooks/useField';
 export * from './hoc/hooks/useAuth';
+export * from './hoc/hooks/useLoading';
 export * from './hoc/hooks/useGetDoc';
-export * from './hoc/hooks/useSaveDoc';
+export * from './hoc/hooks/useUpdateDoc';
 export * from './hoc/hooks/FirebaseReducer';
 
 export * from './auth/ChooseGender';
