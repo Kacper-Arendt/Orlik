@@ -1,4 +1,4 @@
-import {doc, collection, getDoc, setDoc, updateDoc, increment, addDoc} from "firebase/firestore";
+import {doc, collection, getDoc, setDoc, updateDoc, increment, addDoc, serverTimestamp} from "firebase/firestore";
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {firestore} from './config';
 import {FirebasePath} from "../../model/Firebase";
@@ -75,7 +75,7 @@ export const generateUserDocument = async (
 
 export const generateDoc = async (path: FirebasePath, data: {}): Promise<any> => {
     try {
-        return  await addDoc(collection(firestore, path), data);
+        return  await addDoc(collection(firestore, path), {...data, timestamp: serverTimestamp()});
     } catch (error) {
         console.log(error);
     }

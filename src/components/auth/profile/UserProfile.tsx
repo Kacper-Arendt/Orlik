@@ -106,7 +106,7 @@ export const UserProfile = () => {
     }
 
     return (
-        <WithLoading isLoading={state.loading} error={state.message}>
+        <WithLoading isLoading={state.loading}>
             {edit && editHandler()}
             <Wrapper>
                 <Profile  style={{

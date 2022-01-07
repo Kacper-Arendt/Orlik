@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {WrapperStyles} from "../reusable/Css";
-import {FirebasePath, useField, WithLoading, useLoading, generateDoc} from "../Components";
+import {FirebasePath, useField, WithLoading, useLoading, generateDoc, useAppSelector} from "../Components";
 import {device} from "../../model/Media";
 
 const Wrapper = styled.div`
@@ -112,23 +112,25 @@ const initialState = {
 
 export const AddFacility = () => {
     const {fields, handleChange, reset} = useField(initialState);
-    const {loading, setLoading, error, setError} = useLoading();
+    const {loading, setLoading, message, setMessage} = useLoading();
+    const {user} = useAppSelector(state => state);
 
     const onSubmitHandler = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
             setLoading(true);
-            const add = await generateDoc(FirebasePath.facilities, fields);
+            const add = await generateDoc(FirebasePath.facilities, {...fields, ownerId: user.id});
             add.id && reset();
+            setMessage({type: 'success', message: 'Facility Added'});
         } catch (e) {
-            setError('Something went wrong, Try again')
+            setMessage({type: 'error', message: 'Something went wrong, Try again'});
         } finally {
             setLoading(false);
         }
     }
 
     return (
-        <WithLoading isLoading={loading} error={error}>
+        <WithLoading isLoading={loading} message={message}>
             <Wrapper>
                 <Header>
                     <h2>Create a new Facility</h2>
