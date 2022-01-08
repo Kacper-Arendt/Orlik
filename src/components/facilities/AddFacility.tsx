@@ -119,11 +119,11 @@ export const AddFacility = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const add = await generateDoc(FirebasePath.facilities, {...fields, ownerId: user.id});
-            add.id && reset();
+             await generateDoc(FirebasePath.facilities, {...fields, ownerId: user.id});
+            reset();
             setMessage({type: 'success', message: 'Facility Added'});
         } catch (e) {
-            setMessage({type: 'error', message: 'Something went wrong, Try again'});
+            setMessage({type: 'error', message: 'Something went wrong, try again'});
         } finally {
             setLoading(false);
         }

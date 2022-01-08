@@ -2,7 +2,7 @@ import React from 'react';
 import styled, {createGlobalStyle} from "styled-components";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {Urls, Nav, device, PrivateRoute} from "./components/Components";
-import {AddFacility, Auth, Facilities, UserProfile} from "./components/Routes";
+import {AddFacility, Auth, EditFacility, Facilities, UserProfile} from "./components/Routes";
 
 const GlobalStyle = createGlobalStyle`
   *,
@@ -59,6 +59,7 @@ function App() {
                     <Route path={Urls.facilities}>
                         <Route index element={<PrivateRoute children={<Facilities/>} />}/>
                         <Route path={Urls.addFacility} element={<PrivateRoute children={<AddFacility/>} />}/>
+                        <Route path={Urls.edit} element={<PrivateRoute children={<EditFacility/>} />}/>
                     </Route>
                 </Routes>
             </HashRouter>
