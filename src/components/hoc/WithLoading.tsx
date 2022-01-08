@@ -49,7 +49,7 @@ const Message = styled.div<{ type: string }>`
 
 interface IProps {
     children: ReactNode,
-    isLoading: boolean,
+    isLoading?: boolean,
     message?: IMessage | null
 }
 

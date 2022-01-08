@@ -6,6 +6,7 @@ export * from './reusable/Form';
 export * from './reusable/Loader';
 export * from './reusable/Popup';
 export * from './reusable/UserImage';
+export * from './reusable/Spinner';
 
 export * from './hoc/WithLoading';
 export * from './hoc/hooks/useField';
