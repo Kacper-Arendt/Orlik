@@ -1,3 +1,4 @@
 export enum FirebasePath {
-    users ='users'
+    users ='users',
+    facilities ='facilities',
 }

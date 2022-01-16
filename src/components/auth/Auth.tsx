@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {WithLoading, useAuth, Register, Login, Urls} from "../Components";
+import {WithLoading, useAuth, Register, Login, Urls, useLoading, IMessage} from "../Components";
 import {device} from "../../model/Media";
 import {Link} from "react-router-dom";
 
@@ -95,17 +95,16 @@ const Card = styled.div<{ active: boolean }>`
 
 export interface IProps {
     setLoading: (val: boolean) => void
-    setError: (val: string) => void
+    setMessage: (val: IMessage) => void
 }
 
 export const Auth = () => {
     const [login, setLogin] = useState(true);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
     const logged = useAuth();
+    const {loading, setLoading, message, setMessage} = useLoading();
 
     return (
-        <WithLoading isLoading={loading} error={error}>
+        <WithLoading isLoading={loading} message={message}>
             <Wrapper>
                 {logged ? <Link to={Urls.profile}>Redirect to profile</Link> :
                     <Box>
@@ -117,7 +116,7 @@ export const Auth = () => {
                                 <Container>
                                     <Login
                                         setLoading={(val: boolean) => setLoading(val)}
-                                        setError={(val: string) => setError(val)}
+                                        setMessage={(val ) => setMessage(val)}
                                     />
                                 </Container>
                             </>
@@ -129,7 +128,7 @@ export const Auth = () => {
                                 <Container>
                                     <Register
                                         setLoading={(val: boolean) => setLoading(val)}
-                                        setError={(val: string) => setError(val)}
+                                        setMessage={(val ) => setMessage(val)}
                                     />
                                 </Container>
                             </>

@@ -1,4 +1,16 @@
-import {doc, getDoc, setDoc, updateDoc, increment} from "firebase/firestore";
+import {
+    doc,
+    collection,
+    getDoc,
+    setDoc,
+    updateDoc,
+    increment,
+    serverTimestamp,
+    getDocs,
+    query,
+    where,
+    WhereFilterOp,
+} from "firebase/firestore";
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {firestore} from './config';
 import {FirebasePath} from "../../model/Firebase";
@@ -17,7 +29,7 @@ export const updateDocument = async <T>(path: FirebasePath, id: string, data: T,
             return 'Done'
         }
     }
-}
+};
 
 export const uploadPhoto = async (path: FirebasePath, id: string, img: any): Promise<any> => {
     try {
@@ -25,6 +37,33 @@ export const uploadPhoto = async (path: FirebasePath, id: string, img: any): Pro
         const photoRef = ref(storage, `${path}/${id}`);
         const upload = uploadBytesResumable(photoRef, img, {contentType: 'image/jpeg'});
         return await getDownloadURL(upload.snapshot.ref);
+    } catch (e) {
+        console.log(e)
+    }
+};
+
+export const getCollection = async (path: FirebasePath) => {
+    try {
+        const fetchedData: Array<any> = [];
+        const data = await getDocs(collection(firestore, path));
+        data.forEach((doc) => {
+            fetchedData.push(doc.data());
+        })
+        return fetchedData
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const getCollectionWithFilter = async (path: FirebasePath, key: string, condition: WhereFilterOp, value: string) => {
+    try {
+        const q = query(collection(firestore, path), where(key, condition, value))
+        const fetchedData: Array<any> = [];
+        const data = await getDocs(q);
+        data.forEach((doc) => {
+            fetchedData.push(doc.data());
+        })
+        return fetchedData
     } catch (e) {
         console.log(e)
     }
@@ -53,7 +92,7 @@ export const getFirebaseDoc = async (path: FirebasePath, id: string) => {
     } catch (error) {
         console.log('Error fetching data', error);
     }
-}
+};
 
 export const generateUserDocument = async (
     id: string,
@@ -67,6 +106,17 @@ export const generateUserDocument = async (
         if (!snapshot.exists()) {
             return await setDoc(docRef, {id, email, createdAt, name, gender, backgroundColor: 0});
         } else {
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const generateDoc = async (path: FirebasePath, data: {}): Promise<any> => {
+    try {
+        const dataRef = await doc(collection(firestore, path));
+        if (dataRef.id) {
+            return await setDoc(dataRef, {...data, timestamp: serverTimestamp(), id: dataRef.id});
         }
     } catch (error) {
         console.log(error);

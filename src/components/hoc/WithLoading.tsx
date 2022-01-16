@@ -1,47 +1,81 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import styled from "styled-components";
-import { Loader } from "../Components";
+import {device, Loader} from "../Components";
 
-const Popup = styled.div`
+const Message = styled.div<{ type: string }>`
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 2rem;
+  right: 1rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
   z-index: 100;
-  width: 100%;
-  height: 6rem;
-  background-color: rgb(200, 50, 100);
+  max-width: 30rem;
+  border-radius: 5px;
+  background-color: ${props => props.type === 'error' ? 'rgb(200, 50, 100)' : 'green'};
 
   p {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 500;
+    color: #ECEFF1;
+    padding: 2rem;
   }
-;
+
+  div {
+    width: 100%;
+    height: 5px;
+    margin-bottom: auto;
+    background-color: orange;
+    animation: ${props => props.type && 'timer 2.8s linear'};
+  }
+
+  @keyframes timer {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+@media${device.tablet} {
+  top: unset;
+  bottom: 2rem;
+  right: 1rem;
+}
 `;
 
 interface IProps {
     children: ReactNode,
-    isLoading: boolean,
-    error: string,
+    isLoading?: boolean,
+    message?: IMessage | null
+}
+
+export interface IMessage {
+    type: 'error' | 'success',
+    message: string
 }
 
 export const WithLoading = (props: IProps) => {
-    const [error, setError] = useState<string>('');
+    const [message, setMessage] = useState<IMessage | null>(null);
 
     useEffect(() => {
-        setError(props.error);
+        if (props.message) {
+            setMessage(props.message);
 
-        setTimeout(() => {
-            setError('');
-        }, 5000);
-    }, [props.error])
+            setTimeout(() => {
+                setMessage(null);
+            }, 3000);
+        }
+    }, [props.message]);
 
     return (
         <>
-            {error.length > 1 && <Popup><p>{error}</p></Popup>}
+            {message && <Message type={props.message!.type}>
+                <div/>
+                <p>{message.message}</p></Message>}
             {props.isLoading && <Loader/>}
             {props.children}
         </>

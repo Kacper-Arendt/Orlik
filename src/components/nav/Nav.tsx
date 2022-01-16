@@ -73,6 +73,7 @@ const StyledLink = styled(Link)`
   color: #000;
   
   padding: 0 5rem .5rem 2rem;
+  width: 50%;
   white-space: nowrap;
   font-size: 2.3rem;
   font-weight: 500;
@@ -107,6 +108,7 @@ export const Nav = () => {
                     :
                     <StyledLink to={Urls.auth}>Auth</StyledLink>
                 }
+                <StyledLink to={Urls.facilities}>Facilities</StyledLink>
             </Menu>
         </StyledNav>
     )

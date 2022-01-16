@@ -13,17 +13,11 @@ import {
 } from "../../Components";
 import {Edit} from "./Edit";
 import {BgcArray} from "./BackgroundPicker";
+import {WrapperStyles} from "../../reusable/Css";
 
 const Wrapper = styled.div`
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin-top: 6rem;
-  height: 100%;
-  width: 100%;
-  max-width: var(--max-width);
+  ${WrapperStyles};
+ 
 
   button {
     margin: auto 0 4rem;
@@ -112,7 +106,7 @@ export const UserProfile = () => {
     }
 
     return (
-        <WithLoading isLoading={state.loading} error={state.message}>
+        <WithLoading isLoading={state.loading}>
             {edit && editHandler()}
             <Wrapper>
                 <Profile  style={{

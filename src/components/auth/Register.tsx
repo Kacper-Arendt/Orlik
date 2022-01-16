@@ -32,9 +32,10 @@ export const Register = (props: IProps) => {
                     gender,
                 );
                 reset();
+                props.setMessage({type: 'success', message: 'User created'});
             }
         } catch (e) {
-            props.setError('Something went wrong, Try Again');
+            props.setMessage({type: 'error', message: 'Something went wrong, Try Again'});
         } finally {
             props.setLoading(false);
         }

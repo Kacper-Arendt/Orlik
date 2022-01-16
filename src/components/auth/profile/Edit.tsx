@@ -6,8 +6,8 @@ import {
     IUser,
     Popup,
     uploadPhoto,
-    useField, UserImage,
-    useSaveDoc,
+    useField, useLoading, UserImage,
+    useUpdateDoc,
     WithLoading
 } from "../../Components";
 import {device} from "../../../model/Media";
@@ -102,7 +102,8 @@ interface IProps {
 export const Edit = (props: IProps) => {
     const [photo, setPhoto] = useState({url: '', file: ''});
     const {fields, handleChange, setFields} = useField(props.data);
-    const {setSearch, state, clearData} = useSaveDoc<IUser, string>(
+    const { message, setMessage} = useLoading();
+    const {setSearch, state, clearData} = useUpdateDoc<IUser, string>(
         {
             path: FirebasePath.users,
             id: fields.id,
@@ -114,9 +115,10 @@ export const Edit = (props: IProps) => {
         if (state.response === 'Done') {
             clearData();
             setSearch(false);
+            setMessage({type: 'success', message: 'Done'});
             props.handleOpen();
         }
-    }, [state, props, setSearch, clearData]);
+    }, [state, props, setSearch, clearData, setMessage]);
 
     const onImageChange = (e: any) => {
         if (e.target.files && e.target.files[0]) {
@@ -139,7 +141,7 @@ export const Edit = (props: IProps) => {
     };
 
     return (
-        <WithLoading isLoading={state.loading} error={state.message}>
+        <WithLoading isLoading={state.loading} message={message}>
             <Popup>
                 <EditForm onSubmit={onSubmitHandler}>
                     <Image>

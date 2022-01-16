@@ -29,6 +29,7 @@ export const Login = (props: IProps) => {
 
             if (request._tokenResponse.localId) {
                 const userDoc = await getUserDocument(request._tokenResponse.localId);
+                props.setMessage({type: 'success', message: 'Success'});
                 if (userDoc) {
                     dispatch(login(userDoc));
                     navigate(Urls.profile);
@@ -36,7 +37,7 @@ export const Login = (props: IProps) => {
             }
         } catch (e) {
             props.setLoading(false);
-            props.setError('Something went wrong, Try Again');
+            props.setMessage({type: 'error', message: 'Something went wrong, Try Again'});
         }
     };
 
