@@ -6,7 +6,10 @@ import {
     updateDoc,
     increment,
     serverTimestamp,
-    getDocs
+    getDocs,
+    query,
+    where,
+    WhereFilterOp,
 } from "firebase/firestore";
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {firestore} from './config';
@@ -39,10 +42,24 @@ export const uploadPhoto = async (path: FirebasePath, id: string, img: any): Pro
     }
 };
 
-export const getCollection = async(path: FirebasePath) => {
+export const getCollection = async (path: FirebasePath) => {
     try {
         const fetchedData: Array<any> = [];
         const data = await getDocs(collection(firestore, path));
+        data.forEach((doc) => {
+            fetchedData.push(doc.data());
+        })
+        return fetchedData
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const getCollectionWithFilter = async (path: FirebasePath, key: string, condition: WhereFilterOp, value: string) => {
+    try {
+        const q = query(collection(firestore, path), where(key, condition, value))
+        const fetchedData: Array<any> = [];
+        const data = await getDocs(q);
         data.forEach((doc) => {
             fetchedData.push(doc.data());
         })
@@ -98,7 +115,7 @@ export const generateUserDocument = async (
 export const generateDoc = async (path: FirebasePath, data: {}): Promise<any> => {
     try {
         const dataRef = await doc(collection(firestore, path));
-        if (dataRef.id){
+        if (dataRef.id) {
             return await setDoc(dataRef, {...data, timestamp: serverTimestamp(), id: dataRef.id});
         }
     } catch (error) {

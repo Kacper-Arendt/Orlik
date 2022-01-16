@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {
-    useLoading,
-    IFacility,
-    getCollection,
-    FirebasePath,
-    WithLoading,
     Spinner,
-    FacilityMiniature
-} from "../Components";
+    FacilityMiniature,
+    IFacility,
+    getCollectionWithFilter,
+    useLoading,
+    WithLoading,
+    useAppSelector,
+    FirebasePath
+} from "../../Components";
 
-const FacilitiesContainer = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -19,35 +20,37 @@ const FacilitiesContainer = styled.div`
   padding: 2rem;
 `;
 
-export const FacilitiesList = () => {
-    const {loading, setLoading, setMessage, message} = useLoading();
+export const EditList = () => {
+    const {message, loading, setLoading, setMessage} = useLoading();
+    const {user} = useAppSelector(state => state);
     const [facilities, setFacilities] = useState<Array<IFacility>>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setLoading(true)
-                const data = await getCollection(FirebasePath.facilities);
+                if (!user.id) return;
+
+                setLoading(true);
+                const data = await getCollectionWithFilter(FirebasePath.facilities, 'ownerId', '==', user.id);
                 if (data) {
                     const arr: Array<IFacility> = []
                     data.forEach(el => {
                         arr.push(el)
                     })
-                    setFacilities(arr)
+                    setFacilities(arr);
                 }
             } catch (e) {
-                setMessage({type: 'error', message: `Can't load facilities, Try Again`})
+                setMessage({type: 'error', message: `Can't load facilities, Try Again`});
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
         }
-
         fetchData();
-    }, [setLoading, setMessage])
+    }, [user.id, setMessage, setLoading]);
 
     return (
         <WithLoading message={message}>
-            <FacilitiesContainer>
+            <Wrapper>
                 {loading ?
                     <Spinner/>
                     :
@@ -61,13 +64,14 @@ export const FacilitiesList = () => {
                                     city={el.city}
                                     street={el.street}
                                     streetNumber={el.streetNumber}
-                                />)})
+                                />)
+                            })
                             :
                             <p>Facilities not found</p>
                         }
                     </>
                 }
-            </FacilitiesContainer>
+            </Wrapper>
         </WithLoading>
     )
 }

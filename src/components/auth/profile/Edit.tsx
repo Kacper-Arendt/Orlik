@@ -100,7 +100,6 @@ interface IProps {
 }
 
 export const Edit = (props: IProps) => {
-
     const [photo, setPhoto] = useState({url: '', file: ''});
     const {fields, handleChange, setFields} = useField(props.data);
     const { message, setMessage} = useLoading();

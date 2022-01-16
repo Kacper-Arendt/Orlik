@@ -2,6 +2,8 @@ export * from './nav/Nav';
 export * from '../model/Models';
 export * from './firebase/Components'
 
+export * from './facilities/FacilityMiniature'
+
 export * from './reusable/Form';
 export * from './reusable/Loader';
 export * from './reusable/Popup';

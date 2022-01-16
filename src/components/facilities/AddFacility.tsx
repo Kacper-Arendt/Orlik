@@ -108,6 +108,7 @@ const initialState = {
     street: '',
     streetNumber: '',
     postalCode: '',
+    version: 0,
 }
 
 export const AddFacility = () => {

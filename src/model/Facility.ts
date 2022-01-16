@@ -5,5 +5,6 @@ export interface IFacility {
     city: string,
     street: string,
     streetNumber: string,
-    postalCode: string
+    postalCode: string,
+    version: number
 }
